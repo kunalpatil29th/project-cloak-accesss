@@ -31,3 +31,9 @@ DILATION_ITERATIONS = 1
 # Window Settings
 WINDOW_NAME = "Invisible Cloak - Modular Version"
 TUNING_WINDOW_NAME = "Tuning"
+
+# Video Export Settings
+# Definition: FourCC - A 4-character code used to identify video codecs.
+VIDEO_OUTPUT_PATH = "output_cloak.mp4"
+VIDEO_CODEC = "mp4v"
+VIDEO_FPS = 20.0

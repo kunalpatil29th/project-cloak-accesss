@@ -35,7 +35,23 @@ class InvisibleCloak:
     def __init__(self):
         self.cap = cv2.VideoCapture(settings.CAMERA_ID)
         self.background = None
+        self.video_writer = None
         logger.info("Initializing Invisible Cloak...")
+
+    def _setup_video_writer(self, frame_size):
+        """
+        Initializes the VideoWriter object for exporting.
+        
+        Definition: VideoWriter - An OpenCV class for writing video files.
+        """
+        fourcc = cv2.VideoWriter_fourcc(*settings.VIDEO_CODEC)
+        self.video_writer = cv2.VideoWriter(
+            settings.VIDEO_OUTPUT_PATH,
+            fourcc,
+            settings.VIDEO_FPS,
+            frame_size
+        )
+        logger.info(f"Video recorder initialized: {settings.VIDEO_OUTPUT_PATH}")
 
     def capture_background(self):
         """
@@ -86,6 +102,12 @@ class InvisibleCloak:
             res2 = cv2.bitwise_and(frame, frame, mask=mask_inv)
             final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
 
+            # Record if initialized
+            if self.video_writer is None:
+                self._setup_video_writer((final_output.shape[1], final_output.shape[0]))
+            
+            self.video_writer.write(final_output)
+
             cv2.imshow(settings.WINDOW_NAME, final_output)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -99,6 +121,8 @@ class InvisibleCloak:
         Releases resources.
         """
         logger.info("Cleaning up resources...")
+        if self.video_writer:
+            self.video_writer.release()
         self.cap.release()
         cv2.destroyAllWindows()
 
