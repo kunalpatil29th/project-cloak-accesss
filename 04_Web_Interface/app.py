@@ -12,13 +12,22 @@ Concepts:
 3. Templates: Files that contain static data as well as placeholders for dynamic data.
 """
 
+import os
+import sys
 from flask import Flask, render_template, Response
 import cv2
+from datetime import datetime
+
+# Add the parent directory to sys.path to import from utils
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.db_manager import DBManager
 
 # Initialize the Flask application
-# Definition: Flask - A micro web framework written in Python that does not require 
-# particular tools or libraries.
 app = Flask(__name__)
+db = DBManager()
+
+# Global variables for session tracking
+session_start_time = None
 
 @app.route('/')
 def index():
