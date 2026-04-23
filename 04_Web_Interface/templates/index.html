@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Cloak Access</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Project Cloak Access 🧙‍♂️</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/history">Session History</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="hero">
+            <h2>Welcome to the Invisibility Cloak Web Interface</h2>
+            <p>Experience the magic of Computer Vision from your browser.</p>
+        </section>
+        <section id="video-stream">
+            <h3>Live Stream</h3>
+            <div class="video-container">
+                <img src="{{ url_for('video_feed') }}" width="100%" alt="Live Video Feed">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Project Cloak Access. Educational purposes only.</p>
+    </footer>
+</body>
+</html>
