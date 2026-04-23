@@ -1,5 +1,4 @@
 """
-Project Cloak Access: 02_Intermediate - cloak_with_tuning.py
 
 Definition:
 Real-time Parameter Tuning: A methodology used in computer vision to interactively adjust algorithm 
