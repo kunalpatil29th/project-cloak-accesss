@@ -1,16 +1,7 @@
 """
 Project Cloak Access: 01_Basics - simple_cloak.py
 
-Definition: 
-Invisibility Cloak (Computer Vision): A technique that utilizes image segmentation and background subtraction 
-to replace specific color regions in a live video stream with a pre-captured background image.
-
-Concepts:
-1. HSV (Hue, Saturation, Value): A color model that describes colors in terms of their shade (Hue), 
-   vibrancy (Saturation), and brightness (Value).
-2. Masking: The process of isolating specific pixels based on color ranges or spatial properties.
-3. Morphological Operations: Image processing techniques (like Erosion, Dilation, Opening, Closing) 
-   that process images based on shapes.
+Definition: fsjfsojosdg
 """
 
 import cv2
