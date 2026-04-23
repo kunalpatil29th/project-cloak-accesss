@@ -1,7 +1,29 @@
+"""
+Project Cloak Access: utils - db_manager.py
+
+Definition:
+Database Management System (DBMS): Software that interacts with end users, applications, 
+and the database itself to capture and analyze data. SQLite is a C-language library 
+that implements a small, fast, self-contained, high-reliability, full-featured, SQL 
+database engine.
+
+Concepts:
+1. SQL (Structured Query Language): A domain-specific language used in programming 
+   and designed for managing data held in a relational database management system.
+2. Relational Database: A digital database based on the relational model of data.
+3. Transaction: A logical unit of work that contains one or more SQL statements.
+"""
+
 import sqlite3
 from datetime import datetime
 
 class DBManager:
+    """
+    Manager class for handling database operations.
+    
+    Definition: CRUD - Acronym for Create, Read, Update, and Delete, the four basic 
+    functions of persistent storage.
+    """
     def __init__(self, db_name='cloak_sessions.db'):
         self.db_name = db_name
         self.init_db()
