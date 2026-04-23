@@ -11,7 +11,8 @@ This repository is designed with an educational-first approach. Every module con
 - **01_Basics**: A simple, single-script implementation to understand the core logic.
 - **02_Intermediate**: Includes a tuning tool with trackbars to calibrate HSV values for any environment.
 - **03_Advanced**: A modular, object-oriented version using structured logging and centralized configuration.
-- **Utilities**: Custom logger for tracking application state.
+- **04_Web_Interface**: A web-based interface built with Flask to stream the invisibility effect to a browser.
+- **Utilities**: Custom logger and SQLite database manager for tracking application state and session history.
 - **Configuration**: Centralized settings for easy experimentation.
 
 ## 🚀 Getting Started
@@ -48,6 +49,10 @@ This repository is designed with an educational-first approach. Every module con
   ```bash
   python 03_Advanced/advanced_cloak.py
   ```
+- **Web Interface**:
+  ```bash
+  python 04_Web_Interface/app.py
+  ```
 
 ## 🧠 Concepts Covered
 
@@ -56,6 +61,8 @@ This repository is designed with an educational-first approach. Every module con
 - **Morphological Operations**: Opening and Dilation for noise reduction.
 - **Background Subtraction**: The core technique for the invisibility effect.
 - **Modular Programming**: Organized code structure for scalability.
+- **Web Development**: Building interfaces with Flask and Jinja2.
+- **Relational Databases**: Managing persistent data with SQLite.
 
 ## 🤝 Contributing
 
