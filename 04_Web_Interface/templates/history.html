@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session History - Project Cloak Access</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Project Cloak Access 🧙‍♂️</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/history">Session History</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="history">
+            <h2>Session History</h2>
+            <p>A log of all your invisibility sessions.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration (s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{ session[0] }}</td>
+                        <td>{{ session[1] }}</td>
+                        <td>{{ session[2] }}</td>
+                        <td>{{ "%.2f"|format(session[3]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Project Cloak Access. Educational purposes only.</p>
+    </footer>
+</body>
+</html>

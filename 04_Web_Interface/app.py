@@ -39,5 +39,13 @@ def index():
     """
     return render_template('index.html')
 
+@app.route('/history')
+def history():
+    """
+    Route to display session history from the database.
+    """
+    sessions = db.get_all_sessions()
+    return render_template('history.html', sessions=sessions)
+
 if __name__ == '__main__':
     app.run(debug=True)
