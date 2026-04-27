@@ -21,13 +21,42 @@ from datetime import datetime
 # Add the parent directory to sys.path to import from utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.db_manager import DBManager
+import importlib.util
+
+# Dynamically import InvisibleCloak from the numbered folder
+spec = importlib.util.spec_from_file_location("advanced_cloak", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "03_Advanced", "advanced_cloak.py"))
+advanced_cloak = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(advanced_cloak)
+InvisibleCloak = advanced_cloak.InvisibleCloak
 
 # Initialize the Flask application
 app = Flask(__name__)
 db = DBManager()
+cloak = InvisibleCloak()
 
 # Global variables for session tracking
 session_start_time = None
+
+def gen_frames():
+    """
+    Generator function for video streaming.
+    
+    Definition: Generator - A special type of function that returns an iterable 
+    set of items, one at a time, in a special way.
+    """
+    if cloak.background is None:
+        cloak.capture_background()
+    
+    while True:
+        success, frame = cloak.cap.read()
+        if not success:
+            break
+        else:
+            final_output = cloak.process_frame(frame)
+            ret, buffer = cv2.imencode('.jpg', final_output)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/')
 def index():
@@ -38,6 +67,15 @@ def index():
     functionality to an existing object without modifying its structure.
     """
     return render_template('index.html')
+
+@app.route('/video_feed')
+def video_feed():
+    """
+    Video streaming route. The 'src' attribute of an <img> tag is set to this URL.
+    
+    Definition: MIME Type - A standard that indicates the nature and format of a document.
+    """
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/history')
 def history():
