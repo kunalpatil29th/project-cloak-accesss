@@ -44,19 +44,29 @@ def gen_frames():
     Definition: Generator - A special type of function that returns an iterable 
     set of items, one at a time, in a special way.
     """
+    global session_start_time
+    session_start_time = datetime.now()
+    
     if cloak.background is None:
         cloak.capture_background()
     
-    while True:
-        success, frame = cloak.cap.read()
-        if not success:
-            break
-        else:
-            final_output = cloak.process_frame(frame)
-            ret, buffer = cv2.imencode('.jpg', final_output)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    try:
+        while True:
+            success, frame = cloak.cap.read()
+            if not success:
+                break
+            else:
+                final_output = cloak.process_frame(frame)
+                ret, buffer = cv2.imencode('.jpg', final_output)
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    finally:
+        # Log session when generator is closed or interrupted
+        if session_start_time:
+            end_time = datetime.now()
+            db.log_session(session_start_time, end_time)
+            session_start_time = None
 
 @app.route('/')
 def index():
