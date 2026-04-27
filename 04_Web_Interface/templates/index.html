@@ -26,10 +26,14 @@
             <div class="video-container">
                 <img src="{{ url_for('video_feed') }}" width="100%" alt="Live Video Feed">
             </div>
+            <div class="controls">
+                <button id="capture-btn" class="btn">Capture New Background</button>
+            </div>
         </section>
     </main>
     <footer>
         <p>&copy; 2026 Project Cloak Access. Educational purposes only.</p>
     </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
