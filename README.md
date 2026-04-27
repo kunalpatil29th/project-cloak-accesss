@@ -12,6 +12,7 @@ This repository is designed with an educational-first approach. Every module con
 - **02_Intermediate**: Includes a tuning tool with trackbars to calibrate HSV values for any environment.
 - **03_Advanced**: A modular, object-oriented version using structured logging and centralized configuration.
 - **04_Web_Interface**: A web-based interface built with Flask to stream the invisibility effect to a browser.
+    - **Interactive Features**: Real-time background capture via AJAX and video export/download functionality.
 - **Utilities**: Custom logger and SQLite database manager for tracking application state and session history.
 - **Configuration**: Centralized settings for easy experimentation.
 
