@@ -27,6 +27,7 @@
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Duration (s)</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                         <td>{{ session[1] }}</td>
                         <td>{{ session[2] }}</td>
                         <td>{{ "%.2f"|format(session[3]) }}</td>
+                        <td><a href="{{ url_for('download') }}" class="btn">Download Latest Video</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

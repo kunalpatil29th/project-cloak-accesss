@@ -14,7 +14,7 @@ Concepts:
 
 import os
 import sys
-from flask import Flask, render_template, Response, jsonify
+from flask import Flask, render_template, Response, jsonify, send_from_directory
 import cv2
 from datetime import datetime
 
@@ -108,6 +108,18 @@ def history():
     """
     sessions = db.get_all_sessions()
     return render_template('history.html', sessions=sessions)
+
+@app.route('/download')
+def download():
+    """
+    Route to download the processed video.
+    
+    Definition: Static File - A file that is served to the user as-is, such as 
+    an image, video, or PDF.
+    """
+    directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    filename = "output_cloak.mp4"
+    return send_from_directory(directory, filename, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
