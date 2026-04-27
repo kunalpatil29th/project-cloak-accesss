@@ -14,7 +14,7 @@ Concepts:
 
 import os
 import sys
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, jsonify
 import cv2
 from datetime import datetime
 
@@ -86,6 +86,20 @@ def video_feed():
     Definition: MIME Type - A standard that indicates the nature and format of a document.
     """
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/capture_background')
+def capture_background():
+    """
+    API endpoint to trigger background capture.
+    
+    Definition: API Endpoint - A specific URL where an API can be accessed by a 
+    client application.
+    """
+    try:
+        cloak.capture_background()
+        return jsonify({"status": "success", "message": "Background captured successfully!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/history')
 def history():
