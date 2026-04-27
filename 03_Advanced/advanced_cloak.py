@@ -68,6 +68,30 @@ class InvisibleCloak:
             logger.error("Failed to capture background.")
             raise Exception("Camera capture failed.")
 
+    def process_frame(self, frame):
+        """
+        Processes a single frame for the invisibility effect.
+        """
+        frame = np.flip(frame, axis=1)
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        # Create masks using settings
+        mask1 = cv2.inRange(hsv, settings.LOWER_RED1, settings.UPPER_RED1)
+        mask2 = cv2.inRange(hsv, settings.LOWER_RED2, settings.UPPER_RED2)
+        mask = mask1 + mask2
+
+        # Morphological operations
+        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones(settings.KERNEL_SIZE, np.uint8))
+        mask = cv2.dilate(mask, np.ones(settings.KERNEL_SIZE, np.uint8), iterations=settings.DILATION_ITERATIONS)
+
+        mask_inv = cv2.bitwise_not(mask)
+
+        # Segment and combine
+        res1 = cv2.bitwise_and(self.background, self.background, mask=mask)
+        res2 = cv2.bitwise_and(frame, frame, mask=mask_inv)
+        final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
+        return final_output
+
     def run(self):
         """
         Main loop for processing video frames.
@@ -83,24 +107,7 @@ class InvisibleCloak:
                 logger.warning("Lost camera feed.")
                 break
 
-            frame = np.flip(frame, axis=1)
-            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
-            # Create masks using settings
-            mask1 = cv2.inRange(hsv, settings.LOWER_RED1, settings.UPPER_RED1)
-            mask2 = cv2.inRange(hsv, settings.LOWER_RED2, settings.UPPER_RED2)
-            mask = mask1 + mask2
-
-            # Morphological operations
-            mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones(settings.KERNEL_SIZE, np.uint8))
-            mask = cv2.dilate(mask, np.ones(settings.KERNEL_SIZE, np.uint8), iterations=settings.DILATION_ITERATIONS)
-
-            mask_inv = cv2.bitwise_not(mask)
-
-            # Segment and combine
-            res1 = cv2.bitwise_and(self.background, self.background, mask=mask)
-            res2 = cv2.bitwise_and(frame, frame, mask=mask_inv)
-            final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
+            final_output = self.process_frame(frame)
 
             # Record if initialized
             if self.video_writer is None:
