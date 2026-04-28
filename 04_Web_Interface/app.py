@@ -14,7 +14,7 @@ Concepts:
 
 import os
 import sys
-from flask import Flask, render_template, Response, jsonify, send_from_directory
+from flask import Flask, render_template, Response, jsonify, send_from_directory, request
 import cv2
 from datetime import datetime
 
@@ -100,6 +100,43 @@ def capture_background():
         return jsonify({"status": "success", "message": "Background captured successfully!"})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/update_hsv', methods=['POST'])
+def update_hsv():
+    """
+    API endpoint to update HSV color ranges.
+    
+    Definition: POST Request - An HTTP method used to send data to a server to 
+    create/update a resource.
+    """
+    try:
+        data = request.get_json()
+        
+        # Extract HSV values from request
+        lower1 = (data['h1_low'], data['s1_low'], data['v1_low'])
+        upper1 = (data['h1_high'], data['s1_high'], data['v1_high'])
+        lower2 = (data['h2_low'], data['s2_low'], data['v2_low'])
+        upper2 = (data['h2_high'], data['s2_high'], data['v2_high'])
+        
+        cloak.update_hsv_ranges(lower1, upper1, lower2, upper2)
+        return jsonify({"status": "success", "message": "HSV ranges updated!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route('/update_morph', methods=['POST'])
+def update_morph():
+    """
+    API endpoint to update morphological parameters.
+    """
+    try:
+        data = request.get_json()
+        kernel_size = (data['kernel_size'], data['kernel_size'])
+        dilation_iterations = data['dilation_iterations']
+        
+        cloak.update_morphological_params(kernel_size, dilation_iterations)
+        return jsonify({"status": "success", "message": "Morphological parameters updated!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 @app.route('/history')
 def history():

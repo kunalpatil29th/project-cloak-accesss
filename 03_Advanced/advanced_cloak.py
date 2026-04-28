@@ -36,6 +36,15 @@ class InvisibleCloak:
         self.cap = cv2.VideoCapture(settings.CAMERA_ID)
         self.background = None
         self.video_writer = None
+        
+        # Initialize HSV ranges from settings with dynamic update support
+        self.lower_red1 = settings.LOWER_RED1
+        self.upper_red1 = settings.UPPER_RED1
+        self.lower_red2 = settings.LOWER_RED2
+        self.upper_red2 = settings.UPPER_RED2
+        self.kernel_size = settings.KERNEL_SIZE
+        self.dilation_iterations = settings.DILATION_ITERATIONS
+        
         logger.info("Initializing Invisible Cloak...")
 
     def _setup_video_writer(self, frame_size):
@@ -75,14 +84,14 @@ class InvisibleCloak:
         frame = np.flip(frame, axis=1)
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-        # Create masks using settings
-        mask1 = cv2.inRange(hsv, settings.LOWER_RED1, settings.UPPER_RED1)
-        mask2 = cv2.inRange(hsv, settings.LOWER_RED2, settings.UPPER_RED2)
+        # Create masks using dynamic instance variables
+        mask1 = cv2.inRange(hsv, self.lower_red1, self.upper_red1)
+        mask2 = cv2.inRange(hsv, self.lower_red2, self.upper_red2)
         mask = mask1 + mask2
 
         # Morphological operations
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones(settings.KERNEL_SIZE, np.uint8))
-        mask = cv2.dilate(mask, np.ones(settings.KERNEL_SIZE, np.uint8), iterations=settings.DILATION_ITERATIONS)
+        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones(self.kernel_size, np.uint8))
+        mask = cv2.dilate(mask, np.ones(self.kernel_size, np.uint8), iterations=self.dilation_iterations)
 
         mask_inv = cv2.bitwise_not(mask)
 
@@ -91,6 +100,27 @@ class InvisibleCloak:
         res2 = cv2.bitwise_and(frame, frame, mask=mask_inv)
         final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
         return final_output
+
+    def update_hsv_ranges(self, lower1, upper1, lower2, upper2):
+        """
+        Updates the HSV color ranges dynamically.
+        
+        Definition: Setter Method - A method that updates the value of an instance variable, 
+        often used to enforce data validation or trigger side effects.
+        """
+        self.lower_red1 = lower1
+        self.upper_red1 = upper1
+        self.lower_red2 = lower2
+        self.upper_red2 = upper2
+        logger.info("HSV ranges updated.")
+
+    def update_morphological_params(self, kernel_size, dilation_iterations):
+        """
+        Updates the morphological parameters dynamically.
+        """
+        self.kernel_size = kernel_size
+        self.dilation_iterations = dilation_iterations
+        logger.info("Morphological parameters updated.")
 
     def run(self):
         """

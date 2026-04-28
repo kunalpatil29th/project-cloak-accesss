@@ -30,6 +30,55 @@
                 <button id="capture-btn" class="btn">Capture New Background</button>
             </div>
         </section>
+        
+        <section id="config">
+            <h3>HSV Configuration</h3>
+            <div class="config-grid">
+                <div class="config-group">
+                    <h4>Lower Red 1</h4>
+                    <label>H Low: <span id="h1-low-val">0</span></label>
+                    <input type="range" id="h1-low" min="0" max="179" value="0">
+                    <label>S Low: <span id="s1-low-val">120</span></label>
+                    <input type="range" id="s1-low" min="0" max="255" value="120">
+                    <label>V Low: <span id="v1-low-val">70</span></label>
+                    <input type="range" id="v1-low" min="0" max="255" value="70">
+                </div>
+                
+                <div class="config-group">
+                    <h4>Upper Red 1</h4>
+                    <label>H High: <span id="h1-high-val">10</span></label>
+                    <input type="range" id="h1-high" min="0" max="179" value="10">
+                    <label>S High: <span id="s1-high-val">255</span></label>
+                    <input type="range" id="s1-high" min="0" max="255" value="255">
+                    <label>V High: <span id="v1-high-val">255</span></label>
+                    <input type="range" id="v1-high" min="0" max="255" value="255">
+                </div>
+                
+                <div class="config-group">
+                    <h4>Lower Red 2</h4>
+                    <label>H Low: <span id="h2-low-val">170</span></label>
+                    <input type="range" id="h2-low" min="0" max="179" value="170">
+                    <label>S Low: <span id="s2-low-val">120</span></label>
+                    <input type="range" id="s2-low" min="0" max="255" value="120">
+                    <label>V Low: <span id="v2-low-val">70</span></label>
+                    <input type="range" id="v2-low" min="0" max="255" value="70">
+                </div>
+                
+                <div class="config-group">
+                    <h4>Upper Red 2</h4>
+                    <label>H High: <span id="h2-high-val">180</span></label>
+                    <input type="range" id="h2-high" min="0" max="179" value="179">
+                    <label>S High: <span id="s2-high-val">255</span></label>
+                    <input type="range" id="s2-high" min="0" max="255" value="255">
+                    <label>V High: <span id="v2-high-val">255</span></label>
+                    <input type="range" id="v2-high" min="0" max="255" value="255">
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="update-hsv-btn" class="btn">Update HSV</button>
+            </div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2026 Project Cloak Access. Educational purposes only.</p>
