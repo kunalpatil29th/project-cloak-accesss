@@ -13,7 +13,40 @@
  *    that allows a web page to communicate with a server without reloading the page.
  * 3. Fetch API: A modern interface that allows you to make HTTP requests to servers 
  *    from web browsers.
+ * 4. Error Handling: The process of catching and managing errors that occur during 
+ *    program execution.
  */
+
+let notificationTimeout;
+
+function showNotification(message, type = 'success') {
+    /**
+     * Displays a notification to the user.
+     * 
+     * Definition: Notification System - A component that provides user feedback 
+     * about the outcome of operations, without interrupting the user's workflow.
+     */
+    const notification = document.getElementById('notification');
+    if (notification) {
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+        
+        notificationTimeout = setTimeout(() => {
+            hideNotification();
+        }, 5000);
+    }
+}
+
+function hideNotification() {
+    const notification = document.getElementById('notification');
+    if (notification) {
+        notification.className = 'notification hidden';
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Project Cloak Access Web Interface Loaded.");
@@ -22,13 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (captureBtn) {
         captureBtn.addEventListener('click', () => {
             fetch('/capture_background')
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    alert(data.message);
+                    showNotification(data.message, 'success');
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Failed to capture background.');
+                    showNotification(`Failed to capture background: ${error.message}`, 'error');
                 });
         });
     }
@@ -55,36 +93,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateHsvBtn = document.getElementById('update-hsv-btn');
     if (updateHsvBtn) {
         updateHsvBtn.addEventListener('click', () => {
-            const hsvData = {
-                h1_low: parseInt(document.getElementById('h1-low').value),
-                s1_low: parseInt(document.getElementById('s1-low').value),
-                v1_low: parseInt(document.getElementById('v1-low').value),
-                h1_high: parseInt(document.getElementById('h1-high').value),
-                s1_high: parseInt(document.getElementById('s1-high').value),
-                v1_high: parseInt(document.getElementById('v1-high').value),
-                h2_low: parseInt(document.getElementById('h2-low').value),
-                s2_low: parseInt(document.getElementById('s2-low').value),
-                v2_low: parseInt(document.getElementById('v2-low').value),
-                h2_high: parseInt(document.getElementById('h2-high').value),
-                s2_high: parseInt(document.getElementById('s2-high').value),
-                v2_high: parseInt(document.getElementById('v2-high').value)
-            };
+            try {
+                const hsvData = {
+                    h1_low: parseInt(document.getElementById('h1-low').value),
+                    s1_low: parseInt(document.getElementById('s1-low').value),
+                    v1_low: parseInt(document.getElementById('v1-low').value),
+                    h1_high: parseInt(document.getElementById('h1-high').value),
+                    s1_high: parseInt(document.getElementById('s1-high').value),
+                    v1_high: parseInt(document.getElementById('v1-high').value),
+                    h2_low: parseInt(document.getElementById('h2-low').value),
+                    s2_low: parseInt(document.getElementById('s2-low').value),
+                    v2_low: parseInt(document.getElementById('v2-low').value),
+                    h2_high: parseInt(document.getElementById('h2-high').value),
+                    s2_high: parseInt(document.getElementById('s2-high').value),
+                    v2_high: parseInt(document.getElementById('v2-high').value)
+                };
 
-            fetch('/update_hsv', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(hsvData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to update HSV ranges.');
+                // Validate HSV values
+                Object.values(hsvData).forEach(val => {
+                    if (isNaN(val)) {
+                        throw new Error('All HSV values must be numbers');
+                    }
                 });
+
+                fetch('/update_hsv', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(hsvData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        showNotification(data.message, 'success');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification(`Failed to update HSV ranges: ${error.message}`, 'error');
+                    });
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification(`Validation error: ${error.message}`, 'error');
+            }
         });
     }
 });
