@@ -22,6 +22,25 @@
         <section id="history">
             <h2>Session History</h2>
             <p>A log of all your invisibility sessions.</p>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Sessions</h3>
+                    <p class="stat-value">{{ stats.total_sessions }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Time</h3>
+                    <p class="stat-value">{{ "%.2f"|format(stats.total_duration) }}s</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Duration</h3>
+                    <p class="stat-value">{{ "%.2f"|format(stats.avg_duration) }}s</p>
+                </div>
+            </div>
+            
+            <div class="history-controls">
+                <button id="clear-history-btn" class="btn btn-danger">Clear All History</button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -29,17 +48,19 @@
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Duration (s)</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for session in sessions %}
-                    <tr>
+                    <tr data-session-id="{{ session[0] }}">
                         <td>{{ session[0] }}</td>
                         <td>{{ session[1] }}</td>
                         <td>{{ session[2] }}</td>
                         <td>{{ "%.2f"|format(session[3]) }}</td>
-                        <td><a href="{{ url_for('download') }}" class="btn">Download Latest Video</a></td>
+                        <td>
+                            <button class="btn btn-small delete-btn" data-session-id="{{ session[0] }}">Delete</button>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -49,5 +70,6 @@
     <footer>
         <p>&copy; 2026 Project Cloak Access. Educational purposes only.</p>
     </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

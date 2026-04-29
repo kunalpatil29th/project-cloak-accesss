@@ -19,6 +19,15 @@
     <main>
         <div id="notification" class="notification hidden"></div>
         
+        <section id="keyboard-shortcuts">
+            <h3>Keyboard Shortcuts</h3>
+            <div class="shortcuts-list">
+                <p><kbd>c</kbd> - Capture new background</p>
+                <p><kbd>u</kbd> - Update HSV ranges</p>
+                <p><kbd>?</kbd> - Show/hide shortcuts</p>
+            </div>
+        </section>
+        
         <section id="hero">
             <h2>Welcome to the Invisibility Cloak Web Interface</h2>
             <p>Experience the magic of Computer Vision from your browser.</p>
@@ -30,6 +39,9 @@
             </div>
             <div class="controls">
                 <button id="capture-btn" class="btn">Capture New Background</button>
+                <button id="start-record-btn" class="btn btn-success">Start Recording</button>
+                <button id="stop-record-btn" class="btn btn-danger" style="display: none;">Stop Recording</button>
+                <button id="download-btn" class="btn">Download Recording</button>
             </div>
         </section>
         
@@ -79,6 +91,58 @@
             
             <div class="controls">
                 <button id="update-hsv-btn" class="btn">Update HSV</button>
+            </div>
+        </section>
+        
+        <section id="color-picker">
+            <h3>Color Picker</h3>
+            <p>Pick a color or use a preset to estimate HSV ranges (for educational purposes).</p>
+            
+            <div class="color-presets">
+                <h4>Quick Presets:</h4>
+                <div class="presets-container">
+                    <button class="preset-btn" data-color="red" style="background-color: #ff0000;">Red</button>
+                    <button class="preset-btn" data-color="blue" style="background-color: #0000ff; color: white;">Blue</button>
+                    <button class="preset-btn" data-color="green" style="background-color: #00ff00;">Green</button>
+                    <button class="preset-btn" data-color="yellow" style="background-color: #ffff00;">Yellow</button>
+                    <button class="preset-btn" data-color="cyan" style="background-color: #00ffff;">Cyan</button>
+                    <button class="preset-btn" data-color="magenta" style="background-color: #ff00ff; color: white;">Magenta</button>
+                </div>
+            </div>
+            
+            <div class="color-picker-container">
+                <label for="color-input">Select Color:</label>
+                <input type="color" id="color-input" value="#ff0000">
+                <div id="color-preview" class="color-preview"></div>
+                <div class="hsv-info">
+                    <p><strong>Estimated HSV:</strong></p>
+                    <p>H: <span id="picker-h">0</span></p>
+                    <p>S: <span id="picker-s">100</span></p>
+                    <p>V: <span id="picker-v">100</span></p>
+                </div>
+                <button id="apply-color-btn" class="btn">Apply to Sliders</button>
+            </div>
+        </section>
+        
+        <section id="morph-config">
+            <h3>Morphological Parameters</h3>
+            <p>Adjust kernel size and dilation iterations for noise reduction.</p>
+            <div class="config-grid">
+                <div class="config-group">
+                    <h4>Kernel Size</h4>
+                    <label>Size: <span id="kernel-size-val">5</span></label>
+                    <input type="range" id="kernel-size" min="1" max="15" step="2" value="5">
+                </div>
+                
+                <div class="config-group">
+                    <h4>Dilation Iterations</h4>
+                    <label>Iterations: <span id="dilation-iter-val">1</span></label>
+                    <input type="range" id="dilation-iter" min="1" max="10" value="1">
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="update-morph-btn" class="btn">Update Morphology</button>
             </div>
         </section>
     </main>
