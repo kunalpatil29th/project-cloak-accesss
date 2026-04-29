@@ -2,12 +2,11 @@
 
 In the **Project Cloak Access**, bitwise operations are the engines that perform the "magic" of invisibility. This document explains the core concepts used in our implementation.
 
-## 🧱 Definitions
+
 
 ### 1. Bitwise Operations
 The manipulation of individual bits within a binary representation of data. In image processing, these operations are performed pixel-by-pixel.
-
-### 2. Bitwise AND
+klnb
 A logical operation that results in `1` (white/keep) only if both corresponding bits are `1`. 
 - **Usage**: Used to extract specific regions of an image using a mask.
 - **Example**: `cv2.bitwise_and(image, image, mask=mask)`
