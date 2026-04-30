@@ -1,17 +1,4 @@
-"""
-Project Cloak Access: tests - test_cloak.py
 
-Definition:
-Unit Testing: A software testing method by which individual units of source code—sets of one or 
-more computer program modules together with associated control data, usage procedures, and 
-operating procedures—are tested to determine whether they are fit for use.
-
-Concepts:
-1. Assertions: A confident and forceful statement of fact or belief. In programming, it's a 
-   statement that a predicate is always true at that point in code execution.
-2. Mocking: A process used in unit testing where the behavior of complex objects is simulated 
-   to isolate the unit being tested.
-"""
 
 import unittest
 import numpy as np
