@@ -1,16 +1,4 @@
-"""
-Project Cloak Access: 03_Advanced - advanced_cloak.py
 
-Definition:
-Modular Programming: A software design technique that emphasizes separating the functionality of a 
-program into independent, interchangeable modules, such that each contains everything necessary 
-to execute only one aspect of the desired functionality.
-
-Concepts:
-1. Separation of Concerns: A design principle for separating a computer program into distinct 
-   sections such that each section addresses a separate concern.
-2. Refactoring: The process of restructuring existing computer code—changing the factorization—without 
-   changing its external behavior.
 """
 
 import cv2
