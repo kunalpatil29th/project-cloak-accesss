@@ -1,7 +1,4 @@
-"""
-Project Cloak Access: 01_Basics - simple_cloak.py
 
-Definition: fsjfsojosdg
 """
 
 import cv2
