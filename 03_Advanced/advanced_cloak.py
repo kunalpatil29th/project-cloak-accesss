@@ -1,4 +1,16 @@
+"""
+Project Cloak Access: 03_Advanced - advanced_cloak.py
 
+Definition:
+Object-Oriented Programming (OOP): A programming paradigm based on the concept of "objects", 
+which can contain data (attributes) and code (methods). OOP promotes code reusability, 
+modularity, and maintainability.
+
+Concepts:
+1. Encapsulation: Bundling data and methods that operate on the data within a single unit (class).
+2. Abstraction: Hiding complex implementation details and exposing only necessary features.
+3. Modularity: Dividing code into separate, reusable components.
+4. Resource Management: Properly acquiring and releasing system resources (camera, files, etc.).
 """
 
 import cv2
