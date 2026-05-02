@@ -12,15 +12,17 @@ Concepts:
 
 import logging
 import sys
+from typing import Optional
 
-def setup_logger(name="CloakProject"):
+
+def setup_logger(name: str = "CloakProject", log_level: int = logging.INFO) -> logging.Logger:
     """
     Sets up a basic logger for the project.
     
     Definition: Logger - An object that provides methods for logging messages.
     """
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(log_level)
 
     # Create formatter
     formatter = logging.Formatter(
@@ -30,7 +32,7 @@ def setup_logger(name="CloakProject"):
 
     # Create console handler
     # Definition: Handler - A component that sends log records to their destination (e.g., console, file).
-    handler = logging.StreamHandler(sys.stdout)
+    handler: logging.StreamHandler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
 
     # Add handler to logger
@@ -39,5 +41,6 @@ def setup_logger(name="CloakProject"):
 
     return logger
 
+
 # Initialize a default logger
-logger = setup_logger()
+logger: logging.Logger = setup_logger()
