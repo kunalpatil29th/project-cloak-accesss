@@ -16,6 +16,8 @@ Concepts:
 
 import sqlite3
 from datetime import datetime
+from typing import Optional, List, Dict, Tuple, Any
+
 
 class DBManager:
     """
@@ -24,11 +26,11 @@ class DBManager:
     Definition: CRUD - Acronym for Create, Read, Update, and Delete, the four basic 
     functions of persistent storage.
     """
-    def __init__(self, db_name='cloak_sessions.db'):
-        self.db_name = db_name
+    def __init__(self, db_name: str = 'cloak_sessions.db') -> None:
+        self.db_name: str = db_name
         self.init_db()
 
-    def init_db(self):
+    def init_db(self) -> None:
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
             cursor.execute('''
@@ -41,8 +43,8 @@ class DBManager:
             ''')
             conn.commit()
 
-    def log_session(self, start_time, end_time):
-        duration = (end_time - start_time).total_seconds()
+    def log_session(self, start_time: datetime, end_time: datetime) -> None:
+        duration: float = (end_time - start_time).total_seconds()
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
             cursor.execute('''
@@ -51,13 +53,13 @@ class DBManager:
             ''', (start_time.isoformat(), end_time.isoformat(), duration))
             conn.commit()
 
-    def get_all_sessions(self):
+    def get_all_sessions(self) -> List[Tuple[Any, ...]]:
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT * FROM sessions ORDER BY id DESC')
             return cursor.fetchall()
     
-    def delete_session(self, session_id):
+    def delete_session(self, session_id: int) -> bool:
         """
         Deletes a specific session by ID.
         
@@ -70,7 +72,7 @@ class DBManager:
             conn.commit()
             return cursor.rowcount > 0
     
-    def clear_all_sessions(self):
+    def clear_all_sessions(self) -> None:
         """
         Clears all sessions from the database.
         
@@ -82,14 +84,21 @@ class DBManager:
             cursor.execute('DELETE FROM sessions')
             conn.commit()
     
-    def get_statistics(self):
+    def get_statistics(self) -> Dict[str, Any]:
         """
         Calculates session statistics: total sessions, total duration, average duration.
         """
         with sqlite3.connect(self.db_name) as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT COUNT(*), SUM(duration), AVG(duration) FROM sessions')
-            result = cursor.fetchone()
+            result: Optional[Tuple[Optional[int], Optional[float], Optional[float]]] = cursor.fetchone()
+            
+            if result is None:
+                return {
+                    'total_sessions': 0,
+                    'total_duration': 0.0,
+                    'avg_duration': 0.0
+                }
             
             return {
                 'total_sessions': result[0] or 0,
