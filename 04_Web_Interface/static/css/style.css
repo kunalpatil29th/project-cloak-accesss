@@ -74,19 +74,19 @@ h1, h2, h3 {
 }
 
 .btn-danger {
-    background-color: #e74c3c;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
 }
 
 .btn-danger:hover {
-    background-color: #c0392b;
+    background: linear-gradient(135deg, #c0392b 0%, #96281b 100%);
 }
 
 .btn-success {
-    background-color: #27ae60;
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
 }
 
 .btn-success:hover {
-    background-color: #2ecc71;
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
 }
 
 .btn-success:disabled, .btn-danger:disabled, .btn:disabled {
