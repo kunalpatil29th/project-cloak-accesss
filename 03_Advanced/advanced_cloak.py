@@ -11,6 +11,7 @@ Concepts:
 2. Abstraction: Hiding complex implementation details and exposing only necessary features.
 3. Modularity: Dividing code into separate, reusable components.
 4. Resource Management: Properly acquiring and releasing system resources (camera, files, etc.).
+5. Type Hints: Annotations that indicate the expected type of variables, function parameters, and return values.
 """
 
 import cv2
@@ -18,6 +19,7 @@ import numpy as np
 import time
 import os
 import sys
+from typing import Optional, Tuple
 
 # Add the parent directory to sys.path to import from utils and config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -32,28 +34,28 @@ class InvisibleCloak:
     Definition: Class - A code template for creating objects, providing initial values for state 
     and implementations of behavior.
     """
-    def __init__(self):
-        self.cap = cv2.VideoCapture(settings.CAMERA_ID)
-        self.background = None
-        self.video_writer = None
+    def __init__(self) -> None:
+        self.cap: cv2.VideoCapture = cv2.VideoCapture(settings.CAMERA_ID)
+        self.background: Optional[np.ndarray] = None
+        self.video_writer: Optional[cv2.VideoWriter] = None
         
         # Initialize HSV ranges from settings with dynamic update support
-        self.lower_red1 = settings.LOWER_RED1
-        self.upper_red1 = settings.UPPER_RED1
-        self.lower_red2 = settings.LOWER_RED2
-        self.upper_red2 = settings.UPPER_RED2
-        self.kernel_size = settings.KERNEL_SIZE
-        self.dilation_iterations = settings.DILATION_ITERATIONS
+        self.lower_red1: np.ndarray = settings.LOWER_RED1
+        self.upper_red1: np.ndarray = settings.UPPER_RED1
+        self.lower_red2: np.ndarray = settings.LOWER_RED2
+        self.upper_red2: np.ndarray = settings.UPPER_RED2
+        self.kernel_size: Tuple[int, int] = settings.KERNEL_SIZE
+        self.dilation_iterations: int = settings.DILATION_ITERATIONS
         
         logger.info("Initializing Invisible Cloak...")
 
-    def _setup_video_writer(self, frame_size):
+    def _setup_video_writer(self, frame_size: Tuple[int, int]) -> None:
         """
         Initializes the VideoWriter object for exporting.
         
         Definition: VideoWriter - An OpenCV class for writing video files.
         """
-        fourcc = cv2.VideoWriter_fourcc(*settings.VIDEO_CODEC)
+        fourcc: int = cv2.VideoWriter_fourcc(*settings.VIDEO_CODEC)
         self.video_writer = cv2.VideoWriter(
             settings.VIDEO_OUTPUT_PATH,
             fourcc,
@@ -62,13 +64,15 @@ class InvisibleCloak:
         )
         logger.info(f"Video recorder initialized: {settings.VIDEO_OUTPUT_PATH}")
 
-    def capture_background(self):
+    def capture_background(self) -> None:
         """
         Captures the static background image.
         """
         logger.info(f"Please leave the frame. Capturing background in {settings.BACKGROUND_CAPTURE_DELAY} seconds...")
         time.sleep(settings.BACKGROUND_CAPTURE_DELAY)
         
+        ret: bool
+        frame: np.ndarray
         ret, frame = self.cap.read()
         if ret:
             self.background = np.flip(frame, axis=1)
@@ -77,31 +81,31 @@ class InvisibleCloak:
             logger.error("Failed to capture background.")
             raise Exception("Camera capture failed.")
 
-    def process_frame(self, frame):
+    def process_frame(self, frame: np.ndarray) -> np.ndarray:
         """
         Processes a single frame for the invisibility effect.
         """
         frame = np.flip(frame, axis=1)
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        hsv: np.ndarray = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
         # Create masks using dynamic instance variables
-        mask1 = cv2.inRange(hsv, self.lower_red1, self.upper_red1)
-        mask2 = cv2.inRange(hsv, self.lower_red2, self.upper_red2)
-        mask = mask1 + mask2
+        mask1: np.ndarray = cv2.inRange(hsv, self.lower_red1, self.upper_red1)
+        mask2: np.ndarray = cv2.inRange(hsv, self.lower_red2, self.upper_red2)
+        mask: np.ndarray = mask1 + mask2
 
         # Morphological operations
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones(self.kernel_size, np.uint8))
         mask = cv2.dilate(mask, np.ones(self.kernel_size, np.uint8), iterations=self.dilation_iterations)
 
-        mask_inv = cv2.bitwise_not(mask)
+        mask_inv: np.ndarray = cv2.bitwise_not(mask)
 
         # Segment and combine
-        res1 = cv2.bitwise_and(self.background, self.background, mask=mask)
-        res2 = cv2.bitwise_and(frame, frame, mask=mask_inv)
-        final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
+        res1: np.ndarray = cv2.bitwise_and(self.background, self.background, mask=mask)
+        res2: np.ndarray = cv2.bitwise_and(frame, frame, mask=mask_inv)
+        final_output: np.ndarray = cv2.addWeighted(res1, 1, res2, 1, 0)
         return final_output
 
-    def update_hsv_ranges(self, lower1, upper1, lower2, upper2):
+    def update_hsv_ranges(self, lower1: np.ndarray, upper1: np.ndarray, lower2: np.ndarray, upper2: np.ndarray) -> None:
         """
         Updates the HSV color ranges dynamically.
         
@@ -114,7 +118,7 @@ class InvisibleCloak:
         self.upper_red2 = upper2
         logger.info("HSV ranges updated.")
 
-    def update_morphological_params(self, kernel_size, dilation_iterations):
+    def update_morphological_params(self, kernel_size: Tuple[int, int], dilation_iterations: int) -> None:
         """
         Updates the morphological parameters dynamically.
         """
@@ -122,7 +126,7 @@ class InvisibleCloak:
         self.dilation_iterations = dilation_iterations
         logger.info("Morphological parameters updated.")
 
-    def run(self):
+    def run(self) -> None:
         """
         Main loop for processing video frames.
         """
@@ -132,12 +136,14 @@ class InvisibleCloak:
         logger.info("Starting live processing. Press 'q' to quit.")
         
         while self.cap.isOpened():
+            ret: bool
+            frame: np.ndarray
             ret, frame = self.cap.read()
             if not ret:
                 logger.warning("Lost camera feed.")
                 break
 
-            final_output = self.process_frame(frame)
+            final_output: np.ndarray = self.process_frame(frame)
 
             # Record if initialized
             if self.video_writer is None:
@@ -153,7 +159,7 @@ class InvisibleCloak:
 
         self.cleanup()
 
-    def cleanup(self):
+    def cleanup(self) -> None:
         """
         Releases resources.
         """
@@ -165,7 +171,7 @@ class InvisibleCloak:
 
 if __name__ == "__main__":
     try:
-        cloak = InvisibleCloak()
+        cloak: InvisibleCloak = InvisibleCloak()
         cloak.run()
     except Exception as e:
         logger.error(f"An error occurred: {e}")
