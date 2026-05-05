@@ -1,16 +1,4 @@
-"""
-Project Cloak Access: 02_Intermediate - cloak_with_tuning.py
 
-Definition:
-Real-time Parameter Tuning: A methodology used in computer vision to interactively adjust algorithm 
-parameters (like HSV thresholds) while observing the effect on the output stream.
-
-Concepts:
-1. Trackbars: Graphical UI elements that allow users to select a value from a range by sliding a knob.
-2. Calibration: The process of fine-tuning system parameters to achieve optimal performance in 
-   specific environmental conditions (lighting, color of the cloak, etc.).
-3. Callbacks: Functions that are executed in response to specific events or user actions.
-"""
 
 import cv2
 import numpy as np
