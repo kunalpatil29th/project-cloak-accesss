@@ -177,6 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+    
+    // Screenshot button handler
+    const screenshotBtn = document.getElementById('screenshot-btn');
+    if (screenshotBtn) {
+        screenshotBtn.addEventListener('click', () => {
+            window.location.href = '/screenshot';
+            showNotification('Screenshot downloaded!', 'success');
+        });
+    }
 
     // Setup HSV slider value updates
     const sliderIds = [

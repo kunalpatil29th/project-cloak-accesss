@@ -253,5 +253,41 @@ def recording_status():
     """
     return jsonify({"is_recording": is_recording})
 
+@app.route('/screenshot')
+def screenshot():
+    """
+    API endpoint to take and download a screenshot.
+    """
+    try:
+        success, frame = cloak.cap.read()
+        if not success:
+            return jsonify({"status": "error", "message": "Failed to read camera frame"}), 500
+        
+        final_output = cloak.process_frame(frame)
+        
+        # Generate filename with timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"cloak_screenshot_{timestamp}.jpg"
+        
+        # Save the screenshot temporarily
+        cv2.imwrite(filename, final_output)
+        
+        # Download the file
+        directory = os.getcwd()
+        response = send_from_directory(directory, filename, as_attachment=True)
+        
+        # Clean up the file after sending
+        @response.call_on_close
+        def remove_file():
+            try:
+                if os.path.exists(filename):
+                    os.remove(filename)
+            except:
+                pass
+        
+        return response
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
