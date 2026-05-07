@@ -1,15 +1,4 @@
-# 03_Advanced - Modular Cloak
-
-A professional, object-oriented implementation with proper software engineering practices!
-
-## Concepts Covered
-
-- **Object-Oriented Programming (OOP)**: Classes and encapsulation
-- **Modular Design**: Separating concerns into reusable components
-- **Configuration Management**: Centralized settings
-- **Logging**: Structured application logging
-- **Resource Management**: Proper cleanup of camera and video writer
-
+dj
 ## Architecture
 
 ```
