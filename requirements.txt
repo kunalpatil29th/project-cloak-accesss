@@ -1,3 +1,13 @@
+# Main Dependencies
 opencv-python>=4.8.0
 numpy>=1.24.0
 Flask>=2.3.0
+
+# Development Dependencies
+# For type checking
+mypy>=1.0.0
+# For linting
+flake8>=6.0.0
+# For code formatting
+black>=23.0.0
+isort>=5.0.0
