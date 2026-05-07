@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'kernel-size', 'dilation-iter'
     ];
 
-    sliderIds.forEach(id => {
+    sliderIds.forEach(id => { 
         const slider = document.getElementById(id);
         const valSpan = document.getElementById(`${id}-val`);
         if (slider && valSpan) {
