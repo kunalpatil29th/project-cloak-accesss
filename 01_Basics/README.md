@@ -1,16 +1,4 @@
-# 01_Basics - Simple Cloak
 
-The simplest implementation of the invisibility cloak effect. Perfect for learning the core concepts!
-
-## Concepts Covered
-
-- **Video Capture**: Accessing and reading frames from a webcam
-- **Color Space Conversion**: BGR → HSV for easier color detection
-- **Image Masking**: Isolating specific color regions
-- **Morphological Operations**: Removing noise from masks
-- **Bitwise Operations**: Combining images using masks
-
-## Usage
 
 ```bash
 python simple_cloak.py
