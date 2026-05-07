@@ -1,0 +1,25 @@
+# Project Cloak Access Git Attributes
+
+# Text files
+*.txt         text
+*.md          text
+*.py          text
+*.js          text
+*.css         text
+*.html        text
+*.json        text
+*.yml         text
+*.yaml        text
+
+# Binary files
+*.png         binary
+*.jpg         binary
+*.jpeg        binary
+*.mp4         binary
+*.avi         binary
+*.db          binary
+*.sqlite      binary
+*.sqlite3     binary
+
+# Line endings
+* text=auto eol=lf

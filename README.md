@@ -1,5 +1,13 @@
 # Project Cloak Access 🧙‍♂️
 
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+  <a href="https://github.com/kunalpatil29th/project-cloak-accesss/actions/workflows/tests.yml"><img src="https://github.com/kunalpatil29th/project-cloak-accesss/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <a href="https://github.com/kunalpatil29th/project-cloak-accesss/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.8%2B-blue.svg" alt="Python 3.8+"></a>
+  <a href="https://github.com/kunalpatil29th/project-cloak-accesss/commits/main"><img src="https://img.shields.io/github/last-commit/kunalpatil29th/project-cloak-accesss" alt="Last Commit"></a>
+  <a href="https://github.com/kunalpatil29th/project-cloak-accesss/stargazers"><img src="https://img.shields.io/github/stars/kunalpatil29th/project-cloak-accesss" alt="Stars"></a>
+</div>
+
 Welcome to **Project Cloak Access**, an educational project that demonstrates the power of Computer Vision using OpenCV. This project implements a virtual "Invisibility Cloak" effect, similar to the one seen in Harry Potter.
 
 ## 📚 Project Philosophy
