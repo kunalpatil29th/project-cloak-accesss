@@ -1,34 +1,4 @@
-# Contributing to Project Cloak Access 🧙‍♂️
 
-Thank you for considering contributing to Project Cloak Access! This project is designed to be educational and welcoming to contributors of all skill levels.
-
-## 📖 Code of Conduct
-
-By participating in this project, you agree to maintain a respectful and inclusive environment for everyone.
-
-## 🎯 How to Contribute
-
-### 1. Reporting Bugs
-
-If you find a bug, please open an issue with:
-- A clear description of the problem
-- Steps to reproduce
-- Expected behavior
-- Actual behavior
-- Your environment (Python version, OS, etc.)
-
-### 2. Suggesting Enhancements
-
-Have an idea for a new feature? Open an issue and describe:
-- The feature you'd like to see
-- Why it would be useful
-- Any implementation ideas you have
-
-### 3. Code Contributions
-
-#### Getting Started
-
-1. Fork the repository
 2. Clone your fork:
    ```bash
    git clone https://github.com/YOUR-USERNAME/project-cloak-accesss.git
