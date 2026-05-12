@@ -1,10 +1,4 @@
-"""
-Project Cloak Access Setup
 
-Definition:
-Setup Script - A Python script that installs the package and its dependencies, making it
-available for import in other Python scripts.
-"""
 
 from setuptools import setup, find_packages
 
