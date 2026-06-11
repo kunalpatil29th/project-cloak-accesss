@@ -1,20 +1,6 @@
 """
 Project Cloak Access: 01_Basics - simple_cloak.py
 
-Definition:
-Computer Vision: An interdisciplinary scientific field that deals with how computers can gain
-high-level understanding from digital images or videos. It seeks to understand and automate
-tasks that the human visual system can do.
-
-Concepts:
-1. Color Space Conversion: Transforming an image from one color space (e.g., BGR) to another (e.g., HSV)
-   for easier color-based segmentation.
-2. Image Segmentation: Partitioning a digital image into multiple segments (sets of pixels, also known as
-   image objects) to simplify or change the representation of an image into something more meaningful
-   and easier to analyze.
-3. Error Handling: The process of responding to and managing exceptions that occur during program execution.
-"""
-
 import cv2
 import numpy as np
 import time
